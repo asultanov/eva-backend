@@ -12,12 +12,12 @@ class UsersTransformer
         $users->transform(function ($item) {
             return [
                 'id' => $item->id,
-                'tg_id' => $item->tg_id,
-                'tg_login' => $item->tg_login,
-                'tg_name' => $item->tg_name,
+                'name' => $item->name,
+                'last_name' => $item->last_name,
+                'patronymic' => $item->patronymic,
+                'birthday' => $item->birthday,
                 'phone' => $item->phone,
-                'discount' => $item->discount,
-                'expire_date' => $item->expire_date ? $item->expire_date->format('Y-m-d H:i') : null,
+                'email' => $item->email,
                 'roles' => $item->roles,
             ];
         });

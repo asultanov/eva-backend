@@ -33,3 +33,6 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/get-code', 'getCode')->name('guest.getCode')->withoutMiddleware('VerifyCsrf');
     Route::post('/check-code', 'checkCode')->name('guest.checkCode')->withoutMiddleware('VerifyCsrf');
 });
+
+
+

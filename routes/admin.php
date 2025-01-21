@@ -24,6 +24,20 @@ Route::group(
         Route::get('/user/{user?}', 'specAuth')->name('admin.specAuth');
     });
 
+    Route::controller(TherapyController::class)->group(function () {
+        Route::get('/therapies', 'index')->name('guides-therapies');
+        Route::get('/get-therapies', 'getTherapies')->name('guides-getTherapies');
+        Route::post('/edit-therapies', 'editTherapy')->name('guides-editTherapy')->withoutMiddleware('VerifyCsrf');
+        Route::post('/remove-therapies', 'removeTherapy')->name('guides-removeTherapy')->withoutMiddleware('VerifyCsrf');
+    });
+
+    Route::controller(DiagnosesController::class)->group(function () {
+        Route::get('/diagnoses', 'index')->name('guides-diagnoses');
+        Route::get('/get-diagnoses', 'getDiagnoses')->name('guides-getDiagnoses');
+        Route::post('/edit-diagnoses', 'editDiagnoses')->name('guides-editDiagnoses')->withoutMiddleware('VerifyCsrf');
+        Route::post('/remove-diagnoses', 'removeDiagnoses')->name('guides-removeDiagnoses')->withoutMiddleware('VerifyCsrf');
+    });
+
 });
 
 

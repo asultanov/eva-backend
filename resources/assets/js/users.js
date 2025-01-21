@@ -69,12 +69,12 @@ function roleFormatter(value, row) {
 window.operateEvents = {
     'click .fast_edit': function (e, value, row, index) {
         $('#user_id').val(row.id);
-        $('#tg_login').val(row.tg_login);
-        $('#tg_id').val(row.tg_id);
-        $('#tg_name').val(row.tg_name);
+        $('#name').val(row.name);
+        $('#last_name').val(row.last_name);
+        $('#patronymic').val(row.patronymic);
+        $('#birthday').val(row.birthday);
         $('#phone').val(row.phone);
-        $('#discount').val(row.discount);
-        $('#expire_date').val(row.expire_date);
+        $('#email').val(row.email);
         $('#userrole').select2({placeholder: 'Роль', containerCssClass: 'select-sm', dropdownParent: $('#user_modal')}).val(row.roles.map(
             function (arr) {
                 return arr.id
@@ -91,12 +91,12 @@ $table.bootstrapTable({
         {checkbox: true, align: 'center'},
         {field: 'id', title: '#', align: 'center', visible: false},
         {title: 'Управление', align: "center", clickToSelect: false, events: window.operateEvents, width: 150, formatter: operateFormatter},
-        {field: 'tg_login', title: 'Tg Login', align: 'center'},
-        {field: 'tg_id', title: 'Tg id', align: 'center'},
-        {field: 'tg_name', title: 'Tg Name', align: 'center'},
-        {field: 'phone', title: 'Телефон', align: 'center'},
-        {field: 'expire_date', title: 'Активен до', align: 'center'},
-        {field: 'discount', title: 'Скидка', align: 'center'},
+        {field: 'name', title: 'name', align: 'center'},
+        {field: 'last_name', title: 'last_name', align: 'center'},
+        {field: 'patronymic', title: 'patronymic', align: 'center'},
+        {field: 'birthday', title: 'birthday', align: 'center'},
+        {field: 'phone', title: 'phone', align: 'center'},
+        {field: 'email', title: 'email', align: 'center'},
         {title: 'Роль', align: 'center', formatter: roleFormatter},
     ]
 }).on('check.bs.table uncheck.bs.table ' +

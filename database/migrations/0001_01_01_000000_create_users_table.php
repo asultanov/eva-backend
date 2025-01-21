@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('full_name')->nullable();
             $table->date('birthday')->nullable();
             $table->string('phone')->nullable();
+            $table->foreignIdFor(\App\Models\Guides\Diagnosis::class)->constrained();
+            $table->foreignIdFor(\App\Models\Guides\Therapy::class)->constrained();
             $table->string('email')->nullable()/*->unique()*/;
             //$table->timestamp('email_verified_at')->nullable();
             $table->string('password');

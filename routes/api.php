@@ -22,4 +22,17 @@ Route::group(
         Route::get('/get-current-user', 'getCurrentUser');
         Route::get('/logout', 'logout');
     });
+
+    Route::controller(V1\UserProfileController::class)->group(function () {
+        Route::post('/update-user-profile-information', 'update');
+    });
+});
+
+//Роуты не требующие авторизации
+Route::group(['prefix' => 'api/v1'], function () {
+    Route::controller(V1\DataController::class)->group(function () {
+        Route::get('/get-diagnoses-and-therapies', 'getDiagnosesAndTherapies');
+        Route::get('/get-diagnoses', 'getDiagnoses');
+        Route::get('/get-therapies', 'getTherapies');
+    });
 });

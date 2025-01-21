@@ -75,6 +75,7 @@ class AuthController extends MainController
     public function getCurrentUser(): JsonResponse
     {
         $user = auth()->user();
+        $user->load(['diagnosis', 'therapy']);
         $token = request()->bearerToken();
         return response()->json(['user' => $user, 'token' => $token], 201);
     }

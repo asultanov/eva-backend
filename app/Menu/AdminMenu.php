@@ -11,6 +11,7 @@ class AdminMenu
     {
         $this->is_root = $is_root;
     }
+
     public function menuCombine()
     {
         $verticalMenuData = [
@@ -57,7 +58,32 @@ class AdminMenu
 //                    ],
                 ],
             ],
+            [
+                "name" => "Справочники",
+                "icon" => "menu-icon tf-icons ti ti-settings",
+                "slug" => "guides",
+                'canDo' => $this->is_root,
+                'submenu' => [
+                    [
+                        'url' => route('guides-therapies'),
+                        'name' => 'Терапия',
+                        'icon' => 'far fa-circle',
+                        'slug' => 'guides-therapies',
+                        'canDo' => $this->is_root,
+                    ],
+                    [
+                        'url' => route('guides-diagnoses'),
+                        'name' => 'Диагноз',
+                        'icon' => 'far fa-circle',
+                        'slug' => 'guides-diagnosis',
+                        'canDo' => $this->is_root,
+                    ],
+                ],
+            ],
         ];
         return $verticalMenuData;
     }
 }
+
+
+
