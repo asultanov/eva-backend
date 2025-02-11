@@ -81,6 +81,32 @@ class AuthController extends MainController
     }
 
     /**
+     * Обновление токена пользователя
+     *
+     * @return JsonResponse
+     */
+    public function refreshToken(): JsonResponse
+    {
+        // Проверяем, авторизован ли пользователь
+        if (!auth()->check()) {
+            return response()->json(['message' => 'User not authenticated'], 401);
+        }
+
+        $user = auth()->user();
+
+        // Удаляем текущий токен
+        $user->currentAccessToken()->delete();
+
+        // Создаем новый токен
+        $newToken = $user->createToken($user->email)->plainTextToken;
+
+        return response()->json([
+            'message' => 'Token refreshed successfully',
+            'token' => $newToken
+        ], 200);
+    }
+
+    /**
      * @return JsonResponse
      * @see /routes/api.php
      */

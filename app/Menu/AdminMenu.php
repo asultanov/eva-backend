@@ -78,6 +78,13 @@ class AdminMenu
                         'slug' => 'guides-diagnosis',
                         'canDo' => $this->is_root,
                     ],
+                    [
+                        'url' => route('guides-medicaments'),
+                        'name' => 'Препараты',
+                        'icon' => 'far fa-circle',
+                        'slug' => 'guides-diagnosis',
+                        'canDo' => $this->is_root,
+                    ],
                 ],
             ],
         ];

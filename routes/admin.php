@@ -38,6 +38,15 @@ Route::group(
         Route::post('/remove-diagnoses', 'removeDiagnoses')->name('guides-removeDiagnoses')->withoutMiddleware('VerifyCsrf');
     });
 
+
+    Route::controller(MedicamentController::class)->group(callback: function () {
+        Route::get('/medicaments', 'index')->name('guides-medicaments');
+        Route::get('/get-medicaments', 'getMedicaments')->name('guides-getMedicaments');
+        Route::post('/edit-medicaments', 'editMedicament')->name('guides-editMedicament')->withoutMiddleware('VerifyCsrf');
+        Route::post('/remove-medicaments', 'removeMedicament')->name('guides-removeMedicament')->withoutMiddleware('VerifyCsrf');
+    });
+
+
 });
 
 

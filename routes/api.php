@@ -21,11 +21,31 @@ Route::group(
     Route::controller(V1\AuthController::class)->group(function () {
         Route::get('/get-current-user', 'getCurrentUser');
         Route::get('/logout', 'logout');
+        Route::get('/refresh-token', 'refreshToken');
     });
 
     Route::controller(V1\UserProfileController::class)->group(function () {
         Route::post('/update-user-profile-information', 'update');
     });
+
+    Route::controller(V1\UserCompleteBloodCountController::class)->group(function () {
+        Route::get('blood-tests', 'index');
+        Route::post('blood-tests', 'store');
+        Route::delete('blood-tests/{id}', 'destroy')->where('id', '[0-9]+');
+    });
+
+    Route::controller(V1\UserBloodChemistryTestController::class)->group(function () {
+        Route::get('blood-chemistry-tests', 'index');
+        Route::post('blood-chemistry-tests', 'store');
+        Route::delete('blood-chemistry-tests/{id}', 'destroy')->where('id', '[0-9]+');
+    });
+
+    Route::controller(V1\GettingMedicamentController::class)->group(function () {
+        Route::get('getting-medicaments', 'index');
+        Route::post('getting-medicaments', 'store');
+        Route::delete('getting-medicaments/{id}', 'destroy')->where('id', '[0-9]+');
+    });
+
 });
 
 //Роуты не требующие авторизации
@@ -34,5 +54,8 @@ Route::group(['prefix' => 'api/v1'], function () {
         Route::get('/get-diagnoses-and-therapies', 'getDiagnosesAndTherapies');
         Route::get('/get-diagnoses', 'getDiagnoses');
         Route::get('/get-therapies', 'getTherapies');
+        Route::get('/get-medicaments', 'getMedicaments');
     });
 });
+
+
