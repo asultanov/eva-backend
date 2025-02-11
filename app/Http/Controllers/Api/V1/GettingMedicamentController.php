@@ -17,18 +17,19 @@ class GettingMedicamentController extends Controller
         $user = Auth::user();
 
         $medicaments = GettingMedicament::where('user_id', $user->id)
+            ->with('medicament') // Загружаем данные о препарате
             ->orderBy('date', 'desc')
             ->paginate($perPage);
 
         return response()->json($medicaments);
     }
-
     /**
      * Создание новой записи.
      */
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'medicament_id' => 'required|exists:medicaments,id',
             'date' => 'required|date',
             'time' => 'required|date_format:H:i',
             'dose_mg' => 'nullable|numeric',
@@ -39,6 +40,7 @@ class GettingMedicamentController extends Controller
 
         $medicament = GettingMedicament::create([
             'user_id' => $user->id,
+            'medicament_id' => $validatedData['medicament_id'],
             'date' => $validatedData['date'],
             'time' => $validatedData['time'],
             'dose_mg' => $validatedData['dose_mg'] ?? null,
@@ -47,7 +49,7 @@ class GettingMedicamentController extends Controller
 
         return response()->json([
             'message' => 'Препарат успешно сохранен',
-            'data' => $medicament
+            'data' => $medicament->load('medicament') // Загружаем связанные данные
         ], 201);
     }
 

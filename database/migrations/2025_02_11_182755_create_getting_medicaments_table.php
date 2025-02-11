@@ -12,6 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('getting_medicaments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(\App\Models\Guides\Medicament::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade'); // связь с пользователем
             $table->date('date')->comment('Дата получения препарата');
             $table->time('time')->comment('Время получения препарата');
@@ -29,3 +31,7 @@ return new class extends Migration
         Schema::dropIfExists('getting_medicaments');
     }
 };
+
+
+
+
