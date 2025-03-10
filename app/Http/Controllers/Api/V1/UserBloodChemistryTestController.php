@@ -31,17 +31,17 @@ class UserBloodChemistryTestController extends Controller
     {
         $validatedData = $request->validate([
             'date' => 'nullable|date',
-            'total_protein' => 'required|numeric',
-            'total_bilirubin' => 'required|numeric',
-            'direct_bilirubin' => 'required|numeric',
-            'indirect_bilirubin' => 'required|numeric',
-            'urea' => 'required|numeric',
-            'creatinine' => 'required|numeric',
-            'alt' => 'required|numeric',
-            'ast' => 'required|numeric',
-            'glucose' => 'required|numeric',
-            'cholesterol' => 'required|numeric',
-            'uric_acid' => 'required|numeric',
+            'total_protein' => 'nullable|numeric',
+            'total_bilirubin' => 'nullable|numeric',
+            'direct_bilirubin' => 'nullable|numeric',
+            'indirect_bilirubin' => 'nullable|numeric',
+            'urea' => 'nullable|numeric',
+            'creatinine' => 'nullable|numeric',
+            'alt' => 'nullable|numeric',
+            'ast' => 'nullable|numeric',
+            'glucose' => 'nullable|numeric',
+            'cholesterol' => 'nullable|numeric',
+            'uric_acid' => 'nullable|numeric',
         ]);
 
         $user = Auth::user();

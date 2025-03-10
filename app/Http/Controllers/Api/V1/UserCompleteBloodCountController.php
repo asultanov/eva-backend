@@ -30,18 +30,18 @@ class UserCompleteBloodCountController extends Controller
     {
         $validatedData = $request->validate([
             'date' => 'nullable|date|date_format:Y-m-d',
-            'wbc' => 'required|numeric',
-            'rbc' => 'required|numeric',
-            'plt' => 'required|numeric',
-            'hb' => 'required|numeric',
-            'ht' => 'required|numeric',
-            'stab_neutrophils' => 'required|numeric',
-            'seg_neutrophils' => 'required|numeric',
-            'lymphocytes' => 'required|numeric',
-            'monocytes' => 'required|numeric',
-            'eosinophils' => 'required|numeric',
-            'basophils' => 'required|numeric',
-            'esr' => 'required|numeric',
+            'wbc' => 'nullable|numeric',
+            'rbc' => 'nullable|numeric',
+            'plt' => 'nullable|numeric',
+            'hb' => 'nullable|numeric',
+            'ht' => 'nullable|numeric',
+            'stab_neutrophils' => 'nullable|numeric',
+            'seg_neutrophils' => 'nullable|numeric',
+            'lymphocytes' => 'nullable|numeric',
+            'monocytes' => 'nullable|numeric',
+            'eosinophils' => 'nullable|numeric',
+            'basophils' => 'nullable|numeric',
+            'esr' => 'nullable|numeric',
         ]);
 
         $user = Auth::user();

@@ -1,12 +1,13 @@
 <?php
+
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\GettingMedicament;
+use App\Models\GettingTherapy;
 use Illuminate\Support\Facades\Auth;
 
-class GettingMedicamentController extends Controller
+class GettingTherapyController extends Controller
 {
     /**
      * Получение списка препаратов с пагинацией.
@@ -16,20 +17,20 @@ class GettingMedicamentController extends Controller
         $perPage = $request->query('per_page', 10); // Количество записей на странице (по умолчанию 10)
         $user = Auth::user();
 
-        $medicaments = GettingMedicament::where('user_id', $user->id)
-            ->with('medicament') // Загружаем данные о препарате
+        $therapies = GettingTherapy::where('user_id', $user->id)
+            ->with('therapy') // Загружаем данные о препарате
             ->orderBy('date', 'desc')
             ->paginate($perPage);
 
-        return response()->json($medicaments);
+        return response()->json($therapies);
     }
+
     /**
      * Создание новой записи.
      */
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'medicament_id' => 'required|exists:medicaments,id',
             'date' => 'required|date',
             'time' => 'required|date_format:H:i',
             'dose_mg' => 'nullable|numeric',
@@ -38,9 +39,16 @@ class GettingMedicamentController extends Controller
 
         $user = Auth::user();
 
-        $medicament = GettingMedicament::create([
+        if (!$user->therapy_id) {
+            return response()->json([
+                'message' => 'Не установлен вид принимаемой терапии',
+                'status' => 'error'
+            ], 401);
+        }
+
+        $therapy = GettingTherapy::create([
             'user_id' => $user->id,
-            'medicament_id' => $validatedData['medicament_id'],
+            'therapy_id' => $user->therapy_id,
             'date' => $validatedData['date'],
             'time' => $validatedData['time'],
             'dose_mg' => $validatedData['dose_mg'] ?? null,
@@ -48,8 +56,8 @@ class GettingMedicamentController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Препарат успешно сохранен',
-            'data' => $medicament->load('medicament') // Загружаем связанные данные
+            'message' => 'Запись о приеме терапии успешно добавлена',
+            'data' => $therapy->load('therapy') // Загружаем связанные данные
         ], 201);
     }
 
@@ -59,14 +67,14 @@ class GettingMedicamentController extends Controller
     public function destroy($id)
     {
         $user = Auth::user();
-        $medicament = GettingMedicament::where('id', $id)->where('user_id', $user->id)->first();
+        $therapy = GettingTherapy::where('id', $id)->where('user_id', $user->id)->first();
 
-        if (!$medicament) {
+        if (!$therapy) {
             return response()->json(['message' => 'Запись не найдена или у вас нет прав на удаление'], 404);
         }
 
-        $medicament->delete();
+        $therapy->delete();
 
-        return response()->json(['message' => 'Препарат успешно удален'], 200);
+        return response()->json(['message' => 'Запись о приеме терапии успешно удалена'], 200);
     }
 }

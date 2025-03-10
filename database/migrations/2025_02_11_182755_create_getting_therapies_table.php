@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('getting_medicaments', function (Blueprint $table) {
+        Schema::create('getting_therapies', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Guides\Medicament::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(\App\Models\Guides\Therapy::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(\App\Models\User::class)->constrained()->onDelete('cascade'); // связь с пользователем
             $table->date('date')->comment('Дата получения препарата');
             $table->time('time')->comment('Время получения препарата');
@@ -28,10 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('getting_medicaments');
+        Schema::dropIfExists('getting_therapies');
     }
 };
-
-
-
-

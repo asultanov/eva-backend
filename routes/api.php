@@ -40,10 +40,10 @@ Route::group(
         Route::delete('blood-chemistry-tests/{id}', 'destroy')->where('id', '[0-9]+');
     });
 
-    Route::controller(V1\GettingMedicamentController::class)->group(function () {
-        Route::get('getting-medicaments', 'index');
-        Route::post('getting-medicaments', 'store');
-        Route::delete('getting-medicaments/{id}', 'destroy')->where('id', '[0-9]+');
+    Route::controller(V1\GettingTherapyController::class)->group(function () {
+        Route::get('getting-therapies', 'index');
+        Route::post('getting-therapies', 'store');
+        Route::delete('getting-therapies/{id}', 'destroy')->where('id', '[0-9]+');
     });
 
 });
@@ -54,7 +54,6 @@ Route::group(['prefix' => 'api/v1'], function () {
         Route::get('/get-diagnoses-and-therapies', 'getDiagnosesAndTherapies');
         Route::get('/get-diagnoses', 'getDiagnoses');
         Route::get('/get-therapies', 'getTherapies');
-        Route::get('/get-medicaments', 'getMedicaments');
     });
 });
 
