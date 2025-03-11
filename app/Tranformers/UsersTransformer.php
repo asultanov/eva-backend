@@ -19,6 +19,8 @@ class UsersTransformer
                 'phone' => $item->phone,
                 'email' => $item->email,
                 'roles' => $item->roles,
+                'diagnosis' => $item->diagnosis,
+                'therapy' => $item->therapy,
             ];
         });
         return $users;

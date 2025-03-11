@@ -4,26 +4,28 @@
 
 @section('page-style')
     @vite([
-    'resources/assets/vendor/libs/toastr/toastr.scss',
-    'resources/assets/vendor/libs/bootstrap-table/bootstrap-table.scss',
-    'resources/assets/vendor/libs/bootstrap-icons/bootstrap-icons.scss',
-        'resources/assets/vendor/libs/select2/select2.scss',
+            'resources/assets/vendor/libs/toastr/toastr.scss',
+            'resources/assets/vendor/libs/bootstrap-table/bootstrap-table.scss',
+            'resources/assets/vendor/libs/bootstrap-icons/bootstrap-icons.scss',
+            'resources/assets/vendor/libs/select2/select2.scss',
           ])
 @endsection
 
 @section('page-script')
     @vite([
-    'resources/assets/vendor/libs/bootstrap-table/bootstrap-table.js',
-    'resources/assets/vendor/libs/toastr/toastr.js',
-    'resources/assets/vendor/libs/select2/select2.js',
-       'resources/assets/js/users.js'
+            'resources/assets/js/phone-input.js',
+            'resources/assets/vendor/libs/bootstrap-table/bootstrap-table.js',
+            'resources/assets/vendor/libs/toastr/toastr.js',
+            'resources/assets/vendor/libs/select2/select2.js',
+            'resources/assets/js/users.js',
           ])
     <script>
         let token = '{{ csrf_token() }}';
         let routes = {
             'delete-user': '{{ route('admin.deleteUser') }}',
             'clear-filter': '{{ route('admin.clearFilter') }}',
-            'spec-auth': '{{ route('admin.specAuth') }}'
+            'spec-auth': '{{ route('admin.specAuth') }}',
+            'user-data': '{{ route('admin.userData', ':id') }}'
         };
     </script>
 @endsection
@@ -38,6 +40,7 @@
         <div class="offcanvas-body">
             <form method="POST" class="ajax-post-form" action="{{ route('admin.saveFilter') }}">
                 <input type="hidden" name="type" value="users">
+
                 <div class="mb-1">
                     <label class="form-label" for="f-last-name">Фамилия</label>
                     <input id="f-last-name" name="last_name" value="{{ $data['last_name'] ?? '' }}" class="form-control form-control-sm" type="text" placeholder="Фамилия">
@@ -94,40 +97,62 @@
                         @csrf
                         <input type="hidden" name="id" id="user_id">
 
+
+                        diagnosis_id
+                        therapy_id
+
+
                         <div class="row mb-1">
                             <div class="col-12 col-md-6">
-                                <label class="form-label" for="tg_login">Tg Login</label>
-                                <input type="text" id="tg_login" name="tg_login" class="form-control form-control-sm" placeholder="Tg Login">
+                                <label class="form-label" for="name">Имя</label>
+                                <input type="text" id="name" name="name" class="form-control form-control-sm" placeholder="Имя">
                             </div>
 
                             <div class="col-12 col-md-6">
-                                <label class="form-label" for="tg_id">Tg id</label>
-                                <input type="text" id="tg_id" name="tg_id" class="form-control form-control-sm" placeholder="Tg id">
+                                <label class="form-label" for="last_name">Фамилия</label>
+                                <input type="text" id="last_name" name="last_name" class="form-control form-control-sm" placeholder="Фамилия">
                             </div>
 
                             <div class="col-12 col-md-6">
-                                <label class="form-label" for="tg_name">Tg Name</label>
-                                <input type="text" id="tg_name" name="tg_name" class="form-control form-control-sm" placeholder="Tg Name">
+                                <label class="form-label" for="patronymic">Отчество</label>
+                                <input type="text" id="patronymic" name="patronymic" class="form-control form-control-sm" placeholder="Отчество">
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label" for="birthday">Дата рождения</label>
+                                <input type="date" id="birthday" name="birthday" class="form-control form-control-sm" placeholder="Дата рождения">
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label" for="email">e-mail</label>
+                                <input type="text" id="email" name="email" class="form-control form-control-sm" placeholder="e-mail">
                             </div>
 
                             <div class="col-12 col-md-6">
                                 <label class="form-label" for="phone">Телефон</label>
-                                <input class="form-control form-control-sm" id="phone"
-                                       type="tel" data-tel-input placeholder="+7 (999) 999-99-99" maxlength="18"
-                                       name="phone" autofocus/>
+                                <input class="form-control form-control-sm" id="phone" type="tel" data-tel-input placeholder="+7 (999) 999-99-99" maxlength="18" name="phone" autofocus/>
                             </div>
 
                             <div class="col-12 col-md-6">
-                                <label class="form-label" for="expire_date">Активен до</label>
-                                <input type="datetime-local" id="expire_date" name="expire_date" class="form-control form-control-sm">
+                                <label class="form-label" for="diagnosis">Диагноз</label>
+                                <select class="form-select form-select-sm" name="diagnosis_id" id="diagnosis">
+                                    <option value="">Выбрать</option>
+                                    @foreach(\App\Models\Guides\Diagnosis::all() as $diagnosis)
+                                        <option value="{{ $diagnosis->id }}">{{ $diagnosis->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="col-12 col-md-6">
-                                <label class="form-label" for="discount">Скидка</label>
-                                <input type="number" id="discount" name="discount" class="form-control form-control-sm" min="0" max="100" step="0.01">
+                                <label class="form-label" for="therapy">Терапия</label>
+                                <select class="form-select form-select-sm" name="therapy_id" id="therapy">
+                                    <option value="">Выбрать</option>
+                                    @foreach(\App\Models\Guides\Therapy::all() as $therapy)
+                                        <option value="{{ $therapy->id }}">{{ $therapy->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
-
 
                         <div class="row mb-1" id="userrole2">
                             <div class="col-12">

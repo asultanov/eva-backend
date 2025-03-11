@@ -68,13 +68,16 @@ function roleFormatter(value, row) {
 
 window.operateEvents = {
     'click .fast_edit': function (e, value, row, index) {
+        $('#user_modal form')[0].reset();
         $('#user_id').val(row.id);
-        $('#name').val(row.name);
-        $('#last_name').val(row.last_name);
-        $('#patronymic').val(row.patronymic);
-        $('#birthday').val(row.birthday);
-        $('#phone').val(row.phone);
-        $('#email').val(row.email);
+        $('#name').val(row.name)
+        $('#last_name').val(row.last_name)
+        $('#patronymic').val(row.patronymic)
+        $('#birthday').val(row.birthday)
+        $('#phone').val(row.phone)
+        $('#email').val(row.email)
+        $('#diagnosis option[value=' + row.diagnosis?.id + ']').prop('selected', true);
+        $('#therapy option[value=' + row.therapy?.id + ']').prop('selected', true);
         $('#userrole').select2({placeholder: 'Роль', containerCssClass: 'select-sm', dropdownParent: $('#user_modal')}).val(row.roles.map(
             function (arr) {
                 return arr.id
@@ -87,6 +90,9 @@ window.operateEvents = {
 }
 
 $table.bootstrapTable({
+    onDblClickRow: function (row) {
+        window.open(routes['user-data'].replace(':id', row.id), '_blank');
+    },
     columns: [
         {checkbox: true, align: 'center'},
         {field: 'id', title: '#', align: 'center', visible: false},
@@ -97,6 +103,8 @@ $table.bootstrapTable({
         {field: 'birthday', title: 'birthday', align: 'center'},
         {field: 'phone', title: 'phone', align: 'center'},
         {field: 'email', title: 'email', align: 'center'},
+        {field: 'diagnosis.name', title: 'Диагноз', align: 'center'},
+        {field: 'therapy.name', title: 'Терапия', align: 'center'},
         {title: 'Роль', align: 'center', formatter: roleFormatter},
     ]
 }).on('check.bs.table uncheck.bs.table ' +
@@ -109,7 +117,7 @@ $table.bootstrapTable({
 $(document).on('click', '#reset-filter', function () {
     $.get(routes["clear-filter"], {type: "users"})
         .done(function () {
-            resetForm($('.ajax-post-form:eq(0)')[0], ['type'])
+            $('.ajax-post-form')[0].reset();
             $table.bootstrapTable("refresh");
         });
 });

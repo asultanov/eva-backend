@@ -38,6 +38,10 @@ Route::group(
         Route::post('/remove-diagnoses', 'removeDiagnoses')->name('guides-removeDiagnoses')->withoutMiddleware('VerifyCsrf');
     });
 
+    Route::controller(UserDataController::class)->group(function () {
+        Route::get('/user-data/{id}', 'index')->name('admin.userData');
+
+    });
 
 
 });

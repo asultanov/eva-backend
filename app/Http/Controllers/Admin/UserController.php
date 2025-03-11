@@ -61,7 +61,11 @@ class UserController extends MainController
         $data = ($filter) ? $filter->data : null;
 
         $users = User::query();
-        $users->with(['roles:id,name_ru as text']);
+        $users->with([
+            'roles:id,name_ru as text',
+            'diagnosis',
+            'therapy'
+        ]);
 
         $users->when(isset($data['name']), function ($q) use ($data) {
             return $q->where('name', 'LIKE', "%{$data['name']}%");
@@ -112,13 +116,15 @@ class UserController extends MainController
             $user = User::find($request->id);
         }
 
-        $user->tg_login = $request->tg_login;
-        $user->tg_id = $request->tg_id;
-        $user->tg_name = $request->tg_name;
+        $user->name = $request->name;
+        $user->last_name = $request->last_name;
+        $user->patronymic = $request->patronymic;
+        $user->full_name = $request->last_name . ' ' . $user->name . ' ' . $user->patronymic;
+        $user->birthday = $request->birthday;
         $user->phone = $request->phone;
-        $user->expire_date = $request->expire_date;
-        $user->discount = $request->discount ?? 0;
-
+        $user->email = $request->email;
+        $user->diagnosis_id = $request->diagnosis_id;
+        $user->therapy_id = $request->therapy_id;
 
         try {
             $user->save();
