@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Http\Controllers\Api\V1\UserCompleteBloodCountController;
 use App\Models\Guides\Diagnosis;
 use App\Models\Guides\Therapy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -55,6 +56,22 @@ class User extends Authenticatable
         return [
             'password' => 'hashed',
         ];
+    }
+
+
+
+    public function gettingTherapies()
+    {
+        return $this->hasMany(GettingTherapy::class);
+    }
+    public function bloodTest()
+    {
+        return $this->hasMany(UserBloodChemistryTest::class);
+    }
+
+    public function bloodCount()
+    {
+        return $this->hasMany(UserCompleteBloodCount::class);
     }
 
     public function diagnosis()

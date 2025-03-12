@@ -44,7 +44,7 @@ class AdminMenu
 //                    ],
                     [
                         'url' => route('settings-staff'),
-                        'name' => 'Сотрудники',
+                        'name' => 'Пользователи',
                         'icon' => 'far fa-circle',
                         'slug' => 'settings-staff',
                         'canDo' => $this->is_root,
