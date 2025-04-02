@@ -11,22 +11,62 @@
 @endsection
 
 @section('content')
+    <div class="card mb-6">
+        <div class="card-body pt-12">
+            <div class="row">
+                <div class="col-6">
+                    <div class="user-avatar-section">
+                        <div class="d-flex align-items-center flex-column">
+                            <img class="img-fluid rounded mb-4" src="../../assets/img/avatars/1.png" height="120" width="120" alt="User avatar">
+                            <div class="user-info text-center">
+                                <h5>{{ $user->full_name }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <h5 class="pb-4 border-bottom mb-4">Детали</h5>
+                    <div class="info-container">
+                        <ul class="list-unstyled mb-6">
+                            <li class="mb-2">
+                                <span class="h6">Фамилия:</span>
+                                <span>{{ $user->last_name }}</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="h6">Имя:</span>
+                                <span>{{ $user->name }}</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="h6">Отчество:</span>
+                                <span>{{ $user->patronymic }}</span>
+                            </li>
 
-    <div class="card mb-4">
-        <div class="card-header header-elements">
-            <span class="me-2">Card Header</span>
-        </div>
-        <div class="card-body">
-            <p class="card-text">АДМИНКА</p>
-            @dump($user->toArray())
-
-
+                            <li class="mb-2">
+                                <span class="h6">Дата рождения:</span>
+                                <span>{{ $user->birthday?->format('d.m.Y') }}</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="h6">Телефон:</span>
+                                <span>{{ phoneFormatter($user->phone) }}</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="h6">E-mail:</span>
+                                <span>{{ $user->email }}</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="h6">Диагноз:</span>
+                                <span>{{ $user->diagnosis?->name }}</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="h6">Терапия:</span>
+                                <span>{{ $user->therapy?->name }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-
-
-
 
     <div class="card mb-2">
         <h5 class="card-header">Прием препарата</h5>

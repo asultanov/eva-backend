@@ -15,7 +15,7 @@ class UsersTransformer
                 'name' => $item->name,
                 'last_name' => $item->last_name,
                 'patronymic' => $item->patronymic,
-                'birthday' => $item->birthday,
+                'birthday' => $item->birthday?->format('d.m.Y'),
                 'phone' => $item->phone,
                 'email' => $item->email,
                 'roles' => $item->roles,

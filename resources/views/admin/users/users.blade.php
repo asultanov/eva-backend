@@ -96,12 +96,6 @@
                     <form class="ajax-post-form" method="POST" action="{{ route('admin.fastEdit') }}">
                         @csrf
                         <input type="hidden" name="id" id="user_id">
-
-
-                        diagnosis_id
-                        therapy_id
-
-
                         <div class="row mb-1">
                             <div class="col-12 col-md-6">
                                 <label class="form-label" for="name">Имя</label>
